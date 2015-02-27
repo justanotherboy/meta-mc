@@ -1,0 +1,38 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          mpd
+# Required-Start:    networking $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start mpd daemon.
+### END INIT INFO
+
+PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+
+
+case "$1" in
+start)
+        echo -n "Starting mpd: "
+        start-stop-daemon -S -b -n mpd -a /usr/bin/mpd --
+        echo "done."
+        ;;
+
+stop)
+        echo -n "Stopping mpd: "
+        start-stop-daemon -K -n mpd
+        echo "done."
+        ;;
+
+restart)
+        $0 stop
+        $0 start
+        ;;
+
+*)
+        echo -n "Usage: /etc/init.d/mpd { start | stop | restart }"
+        exit 1
+        ;;
+esac
+
+exit 0
